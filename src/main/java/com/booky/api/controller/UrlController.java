@@ -8,7 +8,7 @@ public class UrlController {
 
     @GetMapping("/status")
     public String getStatus() {
-        return "OK";
+        return "Deployed and running!!";
     }
 
 }
