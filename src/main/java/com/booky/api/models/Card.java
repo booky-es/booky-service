@@ -1,4 +1,4 @@
-package com.booky.api.model;
+package com.booky.api.models;
 
 public class Card {
 
