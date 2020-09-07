@@ -1,4 +1,4 @@
-package com.booky.api.models;
+package com.booky.api.model;
 
 import java.time.LocalDateTime;
 
