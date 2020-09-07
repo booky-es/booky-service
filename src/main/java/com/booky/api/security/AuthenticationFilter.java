@@ -45,6 +45,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		} catch(Exception ex) {
 			LOGGER.error("Exception in AuthenticationFilter : "+ ex.getMessage());
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not resolve jwt token");
+			return;
 		}
 		
 		LOGGER.info("AuthenticationFilter : doFilterInternal : End");
