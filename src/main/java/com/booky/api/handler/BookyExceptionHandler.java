@@ -12,10 +12,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class BookyExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(BookyException.class)
+    public final ResponseEntity<Object> handlExceptions(BookyException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+        return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Object> handleAllExceptions(BookyException ex) {
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
         ErrorResponse errorResponse = new ErrorResponse(Messages.BOOKY_EXCEPTION);
         return new ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 
 }
