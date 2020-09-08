@@ -1,5 +1,6 @@
 package com.booky.api.security;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -46,7 +47,7 @@ public class JwtTokenProvider {
 		Claims claims = null;
 		try {
 			claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-			User user = new User((String)claims.get("id"),"", "", (String)claims.get("firstName"));
+			User user = new User((BigInteger) claims.get("id"),"", "", (String)claims.get("firstName"));
 			return user;
 		} catch(SignatureException ex) {
 			LOGGER.error("Invalid JWT signature");
@@ -76,8 +77,8 @@ public class JwtTokenProvider {
 				
 		if(jwtToken != null && StringUtils.hasText(jwtToken) && jwtToken.startsWith("Bearer ")) {
 			jwtToken = jwtToken.substring(7, jwtToken.length());			
-			User loggingUuser = this.validateJwtToken(jwtToken);
-			Authentication authentication = new AuthenticatedUser(loggingUuser);
+			User loggingUser = this.validateJwtToken(jwtToken);
+			Authentication authentication = new AuthenticatedUser(loggingUser);
 			return authentication;
 			
 		}

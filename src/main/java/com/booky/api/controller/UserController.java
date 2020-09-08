@@ -1,11 +1,13 @@
 package com.booky.api.controller;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.booky.api.constants.Messages;
 import com.booky.api.exception.BookyException;
 import com.booky.api.model.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -61,7 +63,7 @@ public class UserController {
 		if (googleToken != null && StringUtils.hasText(googleToken)) {
 			try {
 				GoogleIdToken.Payload payload = googleTokenService.verifyGoogleToken(googleToken);
-				String userId = payload.getSubject();
+				BigInteger userId = new BigInteger(payload.getSubject());
 				String email = payload.getEmail();
 				String lastName = (String) payload.get("family_name");
 				String firstName = (String) payload.get("given_name");
@@ -70,7 +72,7 @@ public class UserController {
 				JWT = jwtTokenProvider.generateJwtToken(response, user);
 			} catch (Exception ex) {
 				LOGGER.error("loginUser : Exception " + ex.getMessage());
-				throw new BookyException(ex);
+				throw new BookyException(Messages.USER_LOGIN_EXCEPTION);
 			}
 		}
 		if(JWT == null || JWT.isEmpty()) {
