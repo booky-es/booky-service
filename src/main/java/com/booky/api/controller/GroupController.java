@@ -3,7 +3,9 @@ package com.booky.api.controller;
 import com.booky.api.constants.Messages;
 import com.booky.api.context.UserContext;
 import com.booky.api.exception.BookyException;
+import com.booky.api.exception.CardServiceException;
 import com.booky.api.exception.GroupServiceException;
+import com.booky.api.model.Card;
 import com.booky.api.model.CreateGroup;
 import com.booky.api.model.Group;
 import com.booky.api.service.GroupService;
@@ -93,5 +95,28 @@ public class GroupController {
 		}
 		LOGGER.info("getAllGroups : End ");
 		return groups;
+	}
+
+
+	/**
+	 * Controller method for the user to retrieve all cards in a group
+	 *
+	 * @return List<Card>
+	 * @throws BookyException
+	 */
+	@ApiOperation(value = "Get all Cards in a Group")
+	@GetMapping("/groups/{id}/cards")
+	public List<Card> getAllCardsInGroup(@PathVariable("id") long groupId) throws BookyException {
+		LOGGER.info("getAllCardsInGroup : Begin ");
+		List<Card> cards;
+		try {
+			cards = groupService.findAllCardsInGroup(groupId);
+		} catch (GroupServiceException exception) {
+			throw new BookyException(exception);
+		}catch(Exception exception) {
+			throw new BookyException(Messages.GROUP_CARDS_RETRIEVAL_EXCEPTION);
+		}
+		LOGGER.info("getAllCardsInGroup : End ");
+		return cards;
 	}
 }

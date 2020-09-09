@@ -1,11 +1,49 @@
 package com.booky.api.model;
 
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "cards")
 public class Card {
 
-    private String cardId;
-    private String shortURL;
-    private String shortTitle;
-    private String description;
+    public static final String SEQUENCE_NAME = "cards_sequence";
+
+    @Id
+    @JsonIgnore
+    private long id;
+
+    private String url;
+
+    private String title;
+
+    private String shortUrl;
+
     private String image;
-    private boolean auth;
+
+    private long groupId;
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
+
+    public String getUrl() { return url; }
+
+    public void setUrl(String url) { this.url = url; }
+
+    public String getTitle() { return title; }
+
+    public void setTitle(String title) { this.title = title; }
+
+    public String getShortUrl() {  return shortUrl; }
+
+    public void setShortUrl(String shortUrl) { this.shortUrl = shortUrl; }
+
+    public String getImage() { return image; }
+
+    public void setImage(String image) { this.image = image; }
+
+    public long getGroupId() { return groupId; }
+
+    public void setGroupId(long groupId) { this.groupId = groupId; }
 }

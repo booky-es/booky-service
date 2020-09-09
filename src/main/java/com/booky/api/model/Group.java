@@ -26,7 +26,7 @@ public class Group {
     private List<BigInteger> adminIds = new ArrayList<>();
 
     @JsonIgnore
-    private List<String> cardIds = new ArrayList<>();
+    private List<Long> cardIds = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -52,11 +52,11 @@ public class Group {
         this.adminIds = adminIds;
     }
 
-    public List<String> getCardIds() {
+    public List<Long> getCardIds() {
         return cardIds;
     }
 
-    public void setCardIds(List<String> cardIds) {
+    public void setCardIds(List<Long> cardIds) {
         this.cardIds = cardIds;
     }
 }
