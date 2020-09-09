@@ -1,7 +1,11 @@
 package com.booky.api.service.impl;
 
+import com.booky.api.dao.CardDAO;
 import com.booky.api.dao.GroupDAO;
+import com.booky.api.exception.CardServiceException;
+import com.booky.api.exception.GroupDAOException;
 import com.booky.api.exception.GroupServiceException;
+import com.booky.api.model.Card;
 import com.booky.api.model.Group;
 import com.booky.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +49,17 @@ public class GroupServiceImpl implements GroupService {
 			throw new GroupServiceException(exception);
 		}
 		return group;
+	}
+
+	@Override
+	public List<Card> findAllCardsInGroup(long groupId) throws GroupServiceException {
+		List<Card> cards;
+		try {
+			cards = groupDAO.findAllCardsInGroup(groupId);
+		} catch (GroupDAOException exception) {
+			throw new GroupServiceException(exception);
+		}
+		return cards;
 	}
 
 }
