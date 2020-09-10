@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface GroupDAO {
 
-	List<Group> findMyGroups() throws GroupDAOException;
+	List<Group> findAllGroups();
 	
-	Group create(Group group) throws GroupDAOException;
+	Group create(Group group);
 
-	Group findOneGroup(long groupId) throws GroupDAOException;
+	Group findOneGroup(long groupId);
 
 	List<Card> findAllCardsInGroup(long groupId) throws GroupDAOException;
 

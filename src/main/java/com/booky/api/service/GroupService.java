@@ -1,7 +1,6 @@
 package com.booky.api.service;
 
 
-import com.booky.api.exception.CardServiceException;
 import com.booky.api.exception.GroupServiceException;
 import com.booky.api.model.Card;
 import com.booky.api.model.Group;
@@ -12,7 +11,7 @@ public interface GroupService {
 
 	Group create(Group group) throws GroupServiceException;
 
-	List<Group> findMyGroups() throws GroupServiceException;
+	List<Group> findAllGroups() throws GroupServiceException;
 
 	Group findOneGroup(long groupId) throws GroupServiceException;
 

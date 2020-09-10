@@ -1,7 +1,5 @@
 package com.booky.api.dao.impl;
 
-import com.booky.api.constants.Messages;
-import com.booky.api.context.UserContext;
 import com.booky.api.dao.CardDAO;
 import com.booky.api.exception.CardDAOException;
 import com.booky.api.model.Card;
@@ -11,7 +9,6 @@ import com.booky.api.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @Component
@@ -35,13 +32,8 @@ public class CardDAOImpl implements CardDAO {
 	}
 
 	@Override
-	public Card createCard(Card card) throws CardDAOException {
+	public Card createCard(Card card) {
 		Group group = groupRepository.findById(card.getGroupId()).orElse(null);
-		if(group == null) throw new CardDAOException(Messages.CARD_CREATION_EXCEPTION_NO_SUCH_GROUP);
-
-		BigInteger userId = UserContext.getUserFromContext().getUserId();
-		if(!group.getAdminIds().contains(userId))  throw new CardDAOException(Messages.CARD_CREATION_EXCEPTION_INVALID_ADMIN);
-
 		card = cardRepository.save(card);
 		group.getCardIds().add(card.getId());
 		groupRepository.save(group);
@@ -56,6 +48,12 @@ public class CardDAOImpl implements CardDAO {
 		} catch (Exception exception) {
 			throw new CardDAOException(exception);
 		}
+		return card;
+	}
+
+	@Override
+	public Card updateCard(Card card) {
+		cardRepository.save(card);
 		return card;
 	}
 

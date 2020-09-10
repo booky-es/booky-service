@@ -1,8 +1,6 @@
 package com.booky.api.service.impl;
 
-import com.booky.api.dao.CardDAO;
 import com.booky.api.dao.GroupDAO;
-import com.booky.api.exception.CardServiceException;
 import com.booky.api.exception.GroupDAOException;
 import com.booky.api.exception.GroupServiceException;
 import com.booky.api.model.Card;
@@ -30,10 +28,10 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Group> findMyGroups() throws GroupServiceException {
+	public List<Group> findAllGroups() throws GroupServiceException {
 		List<Group> groups;
 		try {
-			groups = groupDAO.findMyGroups();
+			groups = groupDAO.findAllGroups();
 		} catch (Exception exception) {
 			throw new GroupServiceException(exception);
 		}

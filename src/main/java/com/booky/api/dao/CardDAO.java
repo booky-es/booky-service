@@ -9,7 +9,9 @@ public interface CardDAO {
 
 	List<Card> findAllCardsInGroup(long id) throws CardDAOException;
 
-	Card createCard(Card card) throws CardDAOException;
+	Card createCard(Card card);
 
 	Card findCardById(long id) throws CardDAOException;
+
+	Card updateCard(Card card);
 }
