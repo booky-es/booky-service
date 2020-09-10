@@ -22,11 +22,11 @@ public class Group {
 
     private String context;
 
-    @JsonIgnore
     private List<BigInteger> adminIds = new ArrayList<>();
 
-    @JsonIgnore
     private List<Long> cardIds = new ArrayList<>();
+
+    private List<Long> cardQueueIds = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -44,6 +44,7 @@ public class Group {
         this.context = context;
     }
 
+    @JsonIgnore
     public List<BigInteger> getAdminIds() {
         return adminIds;
     }
@@ -52,6 +53,7 @@ public class Group {
         this.adminIds = adminIds;
     }
 
+    @JsonIgnore
     public List<Long> getCardIds() {
         return cardIds;
     }
@@ -59,4 +61,9 @@ public class Group {
     public void setCardIds(List<Long> cardIds) {
         this.cardIds = cardIds;
     }
+
+    @JsonIgnore
+    public List<Long> getCardQueueIds() { return cardQueueIds; }
+
+    public void setCardQueueIds(List<Long> cardQueueIds) { this.cardQueueIds = cardQueueIds; }
 }

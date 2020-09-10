@@ -1,9 +1,7 @@
 package com.booky.api.dao.impl;
 
 import com.booky.api.constants.Messages;
-import com.booky.api.context.UserContext;
 import com.booky.api.dao.GroupDAO;
-import com.booky.api.exception.CardDAOException;
 import com.booky.api.exception.GroupDAOException;
 import com.booky.api.model.Card;
 import com.booky.api.model.Group;
@@ -12,8 +10,6 @@ import com.booky.api.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
-import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -27,49 +23,26 @@ public class GroupDAOImpl implements GroupDAO {
 
 
 	@Override
-	public List<Group> findMyGroups() throws GroupDAOException {
-		List<Group> groups = null;
-		try {
-			groups = groupRepository.findByAdminIds(UserContext.getUserFromContext().getUserId());
-		} catch (Exception exception) {
-			throw new GroupDAOException(exception);
-		}
-		return groups;
+	public List<Group> findAllGroups() {
+		return groupRepository.findAll();
 	}
 
 	@Override
-	public Group create(Group group) throws GroupDAOException {
-		try {
-			group = groupRepository.save(group);
-		} catch (Exception exception) {
-			throw new GroupDAOException(exception);
-		}
-		return group;
+	public Group create(Group group) {
+		return groupRepository.save(group);
 	}
 
 	@Override
-	public Group findOneGroup(long groupId) throws GroupDAOException {
-		Group group;
-		try {
-			group = groupRepository.findById(groupId).orElse(null);
-		} catch (Exception exception) {
-			throw new GroupDAOException(exception);
-		}
-		return group;
+	public Group findOneGroup(long groupId) {
+		return groupRepository.findById(groupId).orElse(null);
 	}
 
 	@Override
 	public List<Card> findAllCardsInGroup(long groupId) throws GroupDAOException {
-		List<Card> cards;
-
 		Group group = findOneGroup(groupId);
 		if(group == null) throw new GroupDAOException(Messages.GROUP_CARDS_RETRIEVAL_NO_SUCH_GROUP);
 
-		BigInteger userId = UserContext.getUserFromContext().getUserId();
-		if(!group.getAdminIds().contains(userId)) throw new GroupDAOException(Messages.GROUP_CARDS_RETRIEVAL_INVALID_ADMIN);
-
-		cards = cardRepository.findByIdIn(group.getCardIds());
-		return cards;
+		return cardRepository.findByIdIn(group.getCardIds());
 	}
 
 }

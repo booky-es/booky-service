@@ -35,19 +35,13 @@ public class CardController {
 	@PostMapping("/cards")
 	public CreateCard createCard(@RequestBody CreateCard card) throws BookyException {
 		LOGGER.info("createCard : Begin ");
-		Card newCArd = new Card();
-		newCArd.setGroupId(card.getGroupId());
-		newCArd.setTitle(card.getTitle());
-		newCArd.setUrl(card.getUrl());
 		try {
-			cardService.createCard(newCArd);
+			card = cardService.createCard(card);
 		} catch (CardServiceException exception) {
 			throw new BookyException(exception);
 		} catch (Exception exception) {
 			throw new BookyException(Messages.CARD_CREATION_EXCEPTION);
 		}
-		card.setId(newCArd.getId());
-		card.setShortUrl("shorturl/1");
 		LOGGER.info("createCard : End ");
 		return card;
 	}
@@ -56,7 +50,7 @@ public class CardController {
 	/**
 	 * Controller method to get a card by Id
 	 *
-	 * @return Group
+	 * @return Card
 	 * @throws BookyException
 	 */
 	@ApiOperation(value = "Retrieve a Card")
@@ -71,6 +65,26 @@ public class CardController {
 			throw new BookyException(Messages.CARD_RETRIEVAL_EXCEPTION);
 		}
 		LOGGER.info("retrieveCard : End ");
+		return card;
+	}
+
+	/**
+	 * Controller method to update a card by Id
+	 *
+	 * @return Card
+	 * @throws BookyException
+	 */
+	@ApiOperation(value = "Retrieve a Card")
+	@PostMapping("/cards/{id}")
+	public CreateCard updateCard(@PathVariable("id") long id, @RequestBody CreateCard card) throws BookyException {
+		LOGGER.info("updateCard : Begin ");
+		try {
+			card = cardService.updateCard(card);
+		} catch (CardServiceException exception) {
+			LOGGER.error("Error while retrieving a Card {}", exception);
+			throw new BookyException(Messages.CARD_UPDATE_EXCEPTION);
+		}
+		LOGGER.info("updateCard : End ");
 		return card;
 	}
 }
