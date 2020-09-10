@@ -1,7 +1,6 @@
 package com.booky.api.controller;
 
 import java.math.BigInteger;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.booky.api.exception.UserServiceException;
 import com.booky.api.model.JwtResponse;
-import com.booky.api.model.User;
 import com.booky.api.security.GoogleTokenService;
 import com.booky.api.security.JwtTokenProvider;
 import com.booky.api.service.UserService;

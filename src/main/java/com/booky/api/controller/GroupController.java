@@ -3,10 +3,8 @@ package com.booky.api.controller;
 import com.booky.api.constants.Messages;
 import com.booky.api.context.UserContext;
 import com.booky.api.exception.BookyException;
-import com.booky.api.exception.CardServiceException;
 import com.booky.api.exception.GroupServiceException;
 import com.booky.api.model.Card;
-import com.booky.api.model.CreateGroup;
 import com.booky.api.model.Group;
 import com.booky.api.service.GroupService;
 import io.swagger.annotations.ApiOperation;
@@ -36,14 +34,11 @@ public class GroupController {
 	 */
 	@ApiOperation(value = "Create Group")
 	@PostMapping("/groups")
-	public CreateGroup createGroup(@RequestBody CreateGroup group) throws BookyException {
+	public Group createGroup(@RequestBody Group group) throws BookyException {
 		LOGGER.info("createGroup : Begin ");
-		Group newGroup = new Group();
-		newGroup.setContext(group.getContext());
-		newGroup.getAdminIds().add(UserContext.getUserFromContext().getUserId());
+		group.getAdminIds().add(UserContext.getUserFromContext().getUserId());
 		try {
-			groupService.create(newGroup);
-			group.setId(newGroup.getId());
+			group = groupService.create(group);
 		} catch (GroupServiceException exception) {
 			LOGGER.error("Error while creating Group {}", exception);
 			throw new BookyException(Messages.GROUP_CREATION_EXCEPTION);
@@ -84,11 +79,11 @@ public class GroupController {
 	 */
 	@ApiOperation(value = "Retrieve all Groups of a User")
 	@GetMapping("/groups")
-	public List<Group> getAllMyGroups() throws BookyException {
+	public List<Group> getAllGroups() throws BookyException {
 		LOGGER.info("getAllGroups : Begin ");
 		List<Group> groups;
 		try {
-			groups = groupService.findMyGroups();
+			groups = groupService.findAllGroups();
 		} catch (GroupServiceException exception) {
 			LOGGER.error("Error while retrieving all Groups of the user{}", exception);
 			throw new BookyException(Messages.ALL_GROUPS_RETRIEVAL_EXCEPTION);

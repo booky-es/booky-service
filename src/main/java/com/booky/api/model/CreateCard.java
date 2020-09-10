@@ -1,5 +1,6 @@
 package com.booky.api.model;
 
+import com.booky.api.constants.CardStatus;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,10 @@ public class CreateCard {
     private String shortUrl;
 
     private String image;
+
+    private String description;
+
+    private CardStatus status;
 
     @NotNull
     private long groupId;
@@ -55,4 +60,13 @@ public class CreateCard {
     public long getGroupId() {  return groupId; }
 
     public void setGroupId(long groupId) { this.groupId = groupId; }
+
+    @JsonIgnore
+    public CardStatus getStatus() {  return status; }
+
+    public void setStatus(CardStatus status) { this.status = status; }
+
+    public String getDescription() {  return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }
