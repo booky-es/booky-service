@@ -1,5 +1,6 @@
 package com.booky.api.controller;
 
+import com.booky.api.constants.CardStatus;
 import com.booky.api.constants.Messages;
 import com.booky.api.exception.BookyException;
 import com.booky.api.exception.CardServiceException;
@@ -74,17 +75,41 @@ public class CardController {
 	 * @return Card
 	 * @throws BookyException
 	 */
-	@ApiOperation(value = "Retrieve a Card")
+	@ApiOperation(value = "Update a Card")
 	@PostMapping("/cards/{id}")
 	public CreateCard updateCard(@PathVariable("id") long id, @RequestBody CreateCard card) throws BookyException {
 		LOGGER.info("updateCard : Begin ");
 		try {
 			card = cardService.updateCard(card);
 		} catch (CardServiceException exception) {
-			LOGGER.error("Error while retrieving a Card {}", exception);
+			LOGGER.error("Error while updating a Card {}", exception);
 			throw new BookyException(Messages.CARD_UPDATE_EXCEPTION);
 		}
 		LOGGER.info("updateCard : End ");
 		return card;
+	}
+
+	/**
+	 * Controller method to delete a card by Id
+	 *
+	 * @return CardStatus
+	 * @throws BookyException
+	 */
+	@ApiOperation(value = "Delete a Card")
+	@DeleteMapping("/cards/{id}")
+	public CardStatus deleteCard(@PathVariable("id") long id) throws BookyException {
+		LOGGER.info("deleteCard : Begin ");
+		try {
+				return cardService.deleteCard(id);
+
+		} catch (CardServiceException exception) {
+			LOGGER.error("Error while deleting a Card {}", exception);
+			throw new BookyException(exception);
+		} catch (Exception exception) {
+			LOGGER.error("Error while deleting a Card {}", exception);
+			throw new BookyException(Messages.CARD_DELETE_EXCEPTION);
+		} finally {
+			LOGGER.info("deleteCard : End ");
+		}
 	}
 }

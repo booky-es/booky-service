@@ -1,7 +1,6 @@
 package com.booky.api.dao.impl;
 
 import com.booky.api.dao.CardDAO;
-import com.booky.api.exception.CardDAOException;
 import com.booky.api.model.Card;
 import com.booky.api.model.Group;
 import com.booky.api.repository.CardRepository;
@@ -9,7 +8,6 @@ import com.booky.api.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 public class CardDAOImpl implements CardDAO {
@@ -21,14 +19,8 @@ public class CardDAOImpl implements CardDAO {
 	private GroupRepository groupRepository;
 
 	@Override
-	public List<Card> findAllCardsInGroup(long groupId) throws CardDAOException {
-		List<Card> cards;
-		try {
-			cards = cardRepository.findAll();
-		} catch (Exception exception) {
-			throw new CardDAOException(exception);
-		}
-		return cards;
+	public Group findGroupOfCard(long id) {
+		return groupRepository.findByCardIds(id);
 	}
 
 	@Override
@@ -41,20 +33,22 @@ public class CardDAOImpl implements CardDAO {
 	}
 
 	@Override
-	public Card findCardById(long id) throws CardDAOException {
-		Card card;
-		try {
-			card = cardRepository.findById(id).orElse(null);
-		} catch (Exception exception) {
-			throw new CardDAOException(exception);
-		}
-		return card;
+	public Card findCardById(long id) {
+		return cardRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Card updateCard(Card card) {
 		cardRepository.save(card);
 		return card;
+	}
+
+	@Override
+	public void deleteCard(long id) {
+		cardRepository.deleteById(id);
+		Group group = groupRepository.findByCardIds(id);
+		group.getCardIds().remove(id);
+		groupRepository.save(group);
 	}
 
 }

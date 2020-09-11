@@ -13,4 +13,5 @@ public interface CardQueueDAO {
 
 	CardQueue findCardQueueById(long id) throws CardQueueDAOException;
 
+	void deleteCardFromQueue(long cardId);
 }
