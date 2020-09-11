@@ -24,16 +24,20 @@ public class CardQueue {
 
     private String description;
 
+    private long cardId;
+
     private CardStatus status;
 
     public CardQueue() {}
 
-    public CardQueue(Card card) {
+    public CardQueue(Card card, CardStatus cardStatus) {
         this.url = card.getUrl();
         this.title = card.getTitle();
         this.image = card.getImage();
         this.groupId = card.getGroupId();
         this.description = card.getDescription();
+        this.status=cardStatus;
+        this.cardId = card.getId();
     }
 
     public long getId() { return id; }
@@ -60,4 +64,11 @@ public class CardQueue {
 
     public void setDescription(String description) { this.description = description; }
 
+    public long getCardId() {  return cardId; }
+
+    public void setCardId(long cardId) {  this.cardId = cardId; }
+
+    public CardStatus getStatus() {  return status; }
+
+    public void setStatus(CardStatus status) {  this.status = status; }
 }

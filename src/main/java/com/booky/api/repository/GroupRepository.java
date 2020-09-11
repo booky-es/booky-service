@@ -12,4 +12,6 @@ import java.util.List;
 public interface GroupRepository extends MongoRepository<Group, Long> {
 
     List<Group> findByAdminIds(BigInteger adminId);
+
+    Group findByCardIds(long id);
 }

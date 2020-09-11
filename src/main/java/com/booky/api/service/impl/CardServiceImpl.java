@@ -46,7 +46,7 @@ public class CardServiceImpl implements CardService {
 				cardDAO.createCard(newCard);
 				card.setStatus(CardStatus.CREATED);
 			} else {
-				CardQueue cardQueue = new CardQueue(newCard);
+				CardQueue cardQueue = new CardQueue(newCard, CardStatus.PENDING_FOR_CREATION);
 				cardQueueDAO.createCardQueue(cardQueue);
 				card.setStatus(CardStatus.PENDING_FOR_CREATION);
 			}
@@ -77,15 +77,18 @@ public class CardServiceImpl implements CardService {
 		newCard.setUrl(card.getUrl());
 		newCard.setDescription(card.getDescription());
 		try {
-			Group group = groupDAO.findOneGroup(card.getGroupId());
-			if(group == null) throw new CardServiceException(Messages.CARD_CREATION_EXCEPTION_NO_SUCH_GROUP);
+			Card existingCard = cardDAO.findCardById(card.getId());
+			if(existingCard == null) throw new CardServiceException(Messages.CARD_UPDATE_EXCEPTION_NOT_SUCH_CARD);
+
+			Group group = cardDAO.findGroupOfCard(card.getId());
+			if(group == null || group.getId() != card.getGroupId()) throw new CardServiceException(Messages.CARD_UPDATE_EXCEPTION_NO_SUCH_GROUP);
 
 			BigInteger userId = UserContext.getUserFromContext().getUserId();
 			if(group.getAdminIds().contains(userId)) {
-				cardDAO.createCard(newCard);
-				card.setStatus(CardStatus.CREATED);
+				cardDAO.updateCard(newCard);
+				card.setStatus(CardStatus.UPDATED);
 			} else {
-				CardQueue cardQueue = new CardQueue(newCard);
+				CardQueue cardQueue = new CardQueue(newCard, CardStatus.PENDING_FOR_UPDATE);
 				cardQueueDAO.createCardQueue(cardQueue);
 				card.setStatus(CardStatus.PENDING_FOR_UPDATE);
 			}
@@ -94,5 +97,23 @@ public class CardServiceImpl implements CardService {
 		}
 		card.setId(newCard.getId());
 		return card;
+	}
+
+	@Override
+	public CardStatus deleteCard(long id) throws CardServiceException {
+		Card card = cardDAO.findCardById(id);
+		if(card == null) throw new CardServiceException(Messages.CARD_DELETE_EXCEPTION_NO_SUCH_CARD);
+
+		Group group = cardDAO.findGroupOfCard(card.getId());
+		if(group == null) throw new CardServiceException(Messages.CARD_DELETE_EXCEPTION_NO_GROUP_FOUND_FOR_CARD);
+
+		BigInteger userId = UserContext.getUserFromContext().getUserId();
+		if(group.getAdminIds().contains(userId)) {
+			cardDAO.deleteCard(id);
+			cardQueueDAO.deleteCardFromQueue(id);
+			return CardStatus.DELETED;
+		} else {
+			throw new CardServiceException(Messages.CARD_DELETE_EXCEPTION_NOT_ADMIN);
+		}
 	}
 }

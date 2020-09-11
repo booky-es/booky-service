@@ -1,6 +1,7 @@
 package com.booky.api.service;
 
 
+import com.booky.api.constants.CardStatus;
 import com.booky.api.exception.CardServiceException;
 import com.booky.api.model.Card;
 import com.booky.api.model.CreateCard;
@@ -12,4 +13,6 @@ public interface CardService {
 	Card findOneCard(long id) throws CardServiceException;
 
 	CreateCard updateCard(CreateCard card) throws CardServiceException;
+
+	CardStatus deleteCard(long id) throws CardServiceException;
 }

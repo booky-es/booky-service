@@ -15,8 +15,14 @@ public class Messages {
     public static final String CARD_QUEUE_RETRIEVAL_EXCEPTION_NO_SUCH_GROUP = "Retrieval of all cards in queue failed since group cannot be found!";
     public static final String CARD_QUEUE_CREATION_APPROVAL_EXCEPTION_NO_SUCH_GROUP = "Card creation in queue failed since group cannot be found!";
 
+    public static final String CARD_UPDATE_EXCEPTION_NOT_SUCH_CARD = "Card updating failed since no such card is found!";
     public static final String CARD_UPDATE_EXCEPTION = "Card updating failed due to exception!";
     public static final String CARD_UPDATE_EXCEPTION_NO_SUCH_GROUP = "Card updating failed since group cannot be found!";
+
+    public static final String CARD_DELETE_EXCEPTION = "Card deletion failed due to exception!";
+    public static final String CARD_DELETE_EXCEPTION_NO_SUCH_CARD = "Card deletion failed since card cannot be found!";
+    public static final String CARD_DELETE_EXCEPTION_NO_GROUP_FOUND_FOR_CARD = "Card deletion failed since group cannot be found for card!";
+    public static final String CARD_DELETE_EXCEPTION_NOT_ADMIN = "Card deletion failed since user is not an admin!";
 
     public static final String GROUP_RETRIEVAL_EXCEPTION = "Retrieval of a group failed due to exception!";
     public static final String ALL_GROUPS_RETRIEVAL_EXCEPTION = "Retrieval of all groups failed due to exception!";
