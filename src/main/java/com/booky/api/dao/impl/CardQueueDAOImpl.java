@@ -40,4 +40,10 @@ public class CardQueueDAOImpl implements CardQueueDAO {
 	public CardQueue findCardQueueById(long id) throws CardQueueDAOException {
 		return null;
 	}
+
+	@Override
+	public void deleteCardFromQueue(long cardId) {
+		List<CardQueue> cardsInQueue = cardQueueRepository.findByCardId(cardId);
+		cardQueueRepository.deleteAll(cardsInQueue);
+	}
 }
