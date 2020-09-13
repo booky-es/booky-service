@@ -1,17 +1,18 @@
 package com.booky.api.dao;
 
-import com.booky.api.exception.CardQueueDAOException;
 import com.booky.api.model.CardQueue;
 
 import java.util.List;
 
 public interface CardQueueDAO {
 
-	List<CardQueue> findAllCardQueuesInGroup(long groupId) throws CardQueueDAOException;
+	List<CardQueue> findAllCardQueuesInGroup(long groupId);
 
 	CardQueue createCardQueue(CardQueue cardQueue);
 
-	CardQueue findCardQueueById(long id) throws CardQueueDAOException;
+	CardQueue findCardQueueById(long id);
 
-	void deleteCardFromQueue(long cardId);
+	void deleteAllCardQueuesForCard(long cardId);
+
+	void deleteCardQueueFromQueueById(long id);
 }

@@ -110,7 +110,7 @@ public class CardServiceImpl implements CardService {
 		BigInteger userId = UserContext.getUserFromContext().getUserId();
 		if(group.getAdminIds().contains(userId)) {
 			cardDAO.deleteCard(id);
-			cardQueueDAO.deleteCardFromQueue(id);
+			cardQueueDAO.deleteAllCardQueuesForCard(id);
 			return CardStatus.DELETED;
 		} else {
 			throw new CardServiceException(Messages.CARD_DELETE_EXCEPTION_NOT_ADMIN);

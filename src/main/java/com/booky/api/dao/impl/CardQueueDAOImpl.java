@@ -2,7 +2,6 @@ package com.booky.api.dao.impl;
 
 
 import com.booky.api.dao.CardQueueDAO;
-import com.booky.api.exception.CardQueueDAOException;
 import com.booky.api.model.CardQueue;
 import com.booky.api.model.Group;
 import com.booky.api.repository.CardQueueRepository;
@@ -23,8 +22,8 @@ public class CardQueueDAOImpl implements CardQueueDAO {
 
 
 	@Override
-	public List<CardQueue> findAllCardQueuesInGroup(long groupId) throws CardQueueDAOException {
-		return null;
+	public List<CardQueue> findAllCardQueuesInGroup(long groupId) {
+		return cardQueueRepository.findByGroupId(groupId);
 	}
 
 	@Override
@@ -37,13 +36,18 @@ public class CardQueueDAOImpl implements CardQueueDAO {
 	}
 
 	@Override
-	public CardQueue findCardQueueById(long id) throws CardQueueDAOException {
-		return null;
+	public CardQueue findCardQueueById(long id) {
+		return cardQueueRepository.findById(id).orElse(null);
 	}
 
 	@Override
-	public void deleteCardFromQueue(long cardId) {
+	public void deleteAllCardQueuesForCard(long cardId) {
 		List<CardQueue> cardsInQueue = cardQueueRepository.findByCardId(cardId);
 		cardQueueRepository.deleteAll(cardsInQueue);
+	}
+
+	@Override
+	public void deleteCardQueueFromQueueById(long id) {
+		cardQueueRepository.deleteById(id);
 	}
 }
