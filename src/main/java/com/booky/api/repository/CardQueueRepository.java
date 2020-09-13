@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CardQueueRepository extends MongoRepository<CardQueue, Long> {
 
-    List<CardQueue> findByIdIn(List<Long> id);
+    List<CardQueue> findByGroupId(long id);
 
     List<CardQueue> findByCardId(long cardId);
 

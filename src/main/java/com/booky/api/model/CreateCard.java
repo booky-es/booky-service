@@ -27,6 +27,20 @@ public class CreateCard {
     @NotNull
     private long groupId;
 
+    public CreateCard() {}
+
+    public CreateCard(CardQueue cardQueue) {
+        this.id = cardQueue.getCardId();
+        this.title = cardQueue.getTitle();
+        this.shortUrl = "SET URL";
+        this.url = cardQueue.getUrl();
+        this.image = cardQueue.getImage();
+        this.description = cardQueue.getDescription();
+        this.groupId = cardQueue.getGroupId();
+        this.status = cardQueue.getStatus();
+    }
+
+
     @JsonIgnore
     public long getId() {
         return id;
