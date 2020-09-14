@@ -16,6 +16,8 @@ public class CardQueue {
 
     private String url;
 
+    private String shortUrl;
+
     private String title;
 
     private String image;
@@ -32,6 +34,7 @@ public class CardQueue {
 
     public CardQueue(Card card, CardStatus cardStatus) {
         this.url = card.getUrl();
+        this.shortUrl = card.getShortUrl();
         this.title = card.getTitle();
         this.image = card.getImage();
         this.groupId = card.getGroupId();
@@ -47,6 +50,10 @@ public class CardQueue {
     public String getUrl() { return url; }
 
     public void setUrl(String url) { this.url = url; }
+
+    public String getShortUrl() { return shortUrl; }
+
+    public void setShortUrl(String shortUrl) {  this.shortUrl = shortUrl; }
 
     public String getTitle() { return title; }
 

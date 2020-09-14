@@ -3,6 +3,7 @@ package com.booky.api.service;
 
 import com.booky.api.exception.CardQueueServiceException;
 import com.booky.api.model.CardQueue;
+import com.booky.api.model.CreateCard;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface CardQueueService {
 
 	void rejectCardFromQueue(long id) throws CardQueueServiceException;
 
-	void approveCardFromQueue(long id) throws CardQueueServiceException;
+	CreateCard approveCardFromQueue(long id) throws CardQueueServiceException;
 }
