@@ -22,19 +22,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findAll() throws UserServiceException {
-		List<User> users = null;
-		try {
-//			users = userDAO.findAll();
-		} catch (Exception exception) {
-			throw new UserServiceException(exception);
-		}
-		return users;
+	public List<User> findUsers(String match) {
+		return userDAO.findMatchingUsers(match);
 	}
 
 	@Override
 	public User loginUser(User user) throws UserServiceException {
-		User userloggedIn = null;
+		User userloggedIn;
 		try {
 			userloggedIn = userDAO.login(user);
 		} catch (Exception exception) {
