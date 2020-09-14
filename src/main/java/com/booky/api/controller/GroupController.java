@@ -6,6 +6,7 @@ import com.booky.api.exception.BookyException;
 import com.booky.api.exception.GroupServiceException;
 import com.booky.api.model.Card;
 import com.booky.api.model.Group;
+import com.booky.api.model.User;
 import com.booky.api.service.GroupService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -113,5 +114,67 @@ public class GroupController {
 		}
 		LOGGER.info("getAllCardsInGroup : End ");
 		return cards;
+	}
+
+	/**
+	 * Controller method for the user to retrieve all admins of a group
+	 *
+	 * @return List<User>
+	 * @throws BookyException
+	 */
+	@ApiOperation(value = "Get all Admins of a Group")
+	@GetMapping("/groups/{id}/admins")
+	public List<User> getAdminsOfGroup(@PathVariable("id") long groupId) throws BookyException {
+		LOGGER.info("getAdminsOfGroup : Begin ");
+		List<User> admins;
+		try {
+			admins = groupService.findAdminsOfGroup(groupId);
+		} catch (GroupServiceException exception) {
+			throw new BookyException(exception);
+		}catch(Exception exception) {
+			throw new BookyException(Messages.GROUP_ADMINS_RETRIEVAL_EXCEPTION);
+		}
+		LOGGER.info("getAdminsOfGroup : End ");
+		return admins;
+	}
+
+	/**
+	 * Controller method for the user to add an admin for a group
+	 *
+	 * @return
+	 * @throws BookyException
+	 */
+	@ApiOperation(value = "Add Admin for a Group")
+	@PostMapping("/groups/{id}/admins")
+	public void addAdminForGroup(@PathVariable("id") long groupId, @RequestBody User user) throws BookyException {
+		LOGGER.info("addAdminForGroup : Begin ");
+		try {
+			groupService.addAdminForGroup(groupId, user);
+		} catch (GroupServiceException exception) {
+			throw new BookyException(exception);
+		}catch(Exception exception) {
+			throw new BookyException(Messages.GROUP_ADD_ADMIN_EXCEPTION);
+		}
+		LOGGER.info("addAdminForGroup : End ");
+	}
+
+	/**
+	 * Controller method for the user to remove an admin from a group
+	 *
+	 * @return
+	 * @throws BookyException
+	 */
+	@ApiOperation(value = "Remove Admin from a Group")
+	@DeleteMapping("/groups/{id}/admins")
+	public void removeAdminFromGroup(@PathVariable("id") long groupId, @RequestBody User user) throws BookyException {
+		LOGGER.info("removeAdminFromGroup : Begin ");
+		try {
+			groupService.removeAdminFromGroup(groupId, user);
+		} catch (GroupServiceException exception) {
+			throw new BookyException(exception);
+		}catch(Exception exception) {
+			throw new BookyException(Messages.GROUP_REMOVE_ADMIN_EXCEPTION);
+		}
+		LOGGER.info("removeAdminFromGroup : End ");
 	}
 }
