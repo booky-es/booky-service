@@ -33,6 +33,9 @@ public class GroupDAOImpl implements GroupDAO {
 	}
 
 	@Override
+	public Group updateGroup(Group group) {  return groupRepository.save(group); }
+
+	@Override
 	public Group findOneGroup(long groupId) {
 		return groupRepository.findById(groupId).orElse(null);
 	}

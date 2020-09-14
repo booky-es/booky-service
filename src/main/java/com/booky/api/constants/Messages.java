@@ -6,6 +6,8 @@ public class Messages {
 
     public static final String BOOKY_EXCEPTION = "Something went wrong with the application!";
     public static final String USER_LOGIN_EXCEPTION = "User login failed due to exception!";
+    public static final String USERS_RETRIEVAL_EXCEPTION = "Retrieval of users for a match failed due to exception!";
+
     public static final String CARD_CREATION_EXCEPTION = "Card creation failed due to exception!";
     public static final String CARD_CREATION_EXCEPTION_NO_SUCH_GROUP = "Card creation failed since group cannot be found!";
     public static final String CARD_CREATION_APPROVAL_EXCEPTION_NO_SUCH_GROUP = "Card creation failed since group cannot be found!";
@@ -37,5 +39,21 @@ public class Messages {
     public static final String GROUP_CARDS_RETRIEVAL_EXCEPTION = "Retrieval of all cards failed due to exception!";
     public static final String GROUP_CARDS_RETRIEVAL_NO_SUCH_GROUP = "Retrieval of all cards failed since group cannot be found!";
     public static final String GROUP_CARDS_RETRIEVAL_INVALID_ADMIN = "Retrieval of all cards failed since user is not admin!";
+    public static final String GROUP_ADMINS_RETRIEVAL_NO_SUCH_GROUP= "Retrieval of admins of a group failed since group cannot be found!";
+    public static final String GROUP_ADMINS_RETRIEVAL_NOT_ADMIN= "Retrieval of admins of a group failed since user is not admin!";
+    public static final String GROUP_ADMINS_RETRIEVAL_EXCEPTION = "Retrieval of admins of a group failed due to exception!";
+
+    public static final String GROUP_ADD_ADMIN_EXCEPTION = "Addition of admin failed due to exception!";
+    public static final String GROUP_ADD_ADMIN_EXCEPTION_NO_SUCH_GROUP = "Addition of admin failed since group could be found!";
+    public static final String GROUP_ADD_ADMIN_EXCEPTION_NO_SUCH_USER = "Addition of admin failed since user could be found!";
+    public static final String GROUP_ADD_ADMIN_EXCEPTION_ALREADY_ADMIN = "Addition of admin failed since user is already an admin!";
+    public static final String GROUP_ADD_ADMIN_EXCEPTION_NOT_ADMIN = "Addition of admin failed since user is not admin!";
+
+    public static final String GROUP_REMOVE_ADMIN_EXCEPTION = "Removal of admin failed due to exception!";
+    public static final String GROUP_REMOVE_ADMIN_EXCEPTION_NO_SUCH_GROUP = "Removal of admin failed since group could be found!";
+    public static final String GROUP_REMOVE_ADMIN_EXCEPTION_NO_SUCH_USER = "Removal of admin failed since user could be found!";
+    public static final String GROUP_REMOVE_ADMIN_EXCEPTION_LAST_ADMIN = "Removal of admin failed since group has only one admin!";
+    public static final String GROUP_REMOVE_ADMIN_EXCEPTION_NOT_ADMIN = "Removal of admin failed since user is not admin!";
+
 
 }

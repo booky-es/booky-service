@@ -12,6 +12,8 @@ public interface GroupDAO {
 	
 	Group create(Group group);
 
+	Group updateGroup(Group group);
+
 	Group findOneGroup(long groupId);
 
 	List<Card> findAllCardsInGroup(long groupId) throws GroupDAOException;
