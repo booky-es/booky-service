@@ -10,7 +10,7 @@ public interface UserService {
 
 	User signUp(User user) throws UserServiceException;
 
-	List<User> findAll() throws UserServiceException;
+	List<User> findUsers(String match);
 	
 	User loginUser(User user) throws UserServiceException;
 }
