@@ -4,6 +4,7 @@ import com.booky.api.constants.Messages;
 import com.booky.api.exception.BookyException;
 import com.booky.api.exception.CardQueueServiceException;
 import com.booky.api.model.CardQueue;
+import com.booky.api.model.CreateCard;
 import com.booky.api.service.CardQueueService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -56,11 +57,12 @@ public class CardQueueController {
 	 */
 	@ApiOperation(value = "Approve a Card")
 	@PostMapping("/queue/{id}")
-	public void approveCardFromQueue(@PathVariable("id") long id) throws BookyException {
+	public CreateCard approveCardFromQueue(@PathVariable("id") long id) throws BookyException {
 		LOGGER.info("approveQueueCard : Begin ");
+		CreateCard card;
 		try {
 
-			cardQueueService.approveCardFromQueue(id);
+			card = cardQueueService.approveCardFromQueue(id);
 
 		} catch (CardQueueServiceException exception) {
 			LOGGER.error("Error while approving a Card from queue {}", exception);
@@ -71,6 +73,7 @@ public class CardQueueController {
 		} finally {
 			LOGGER.info("approveQueueCard : End ");
 		}
+		return card;
 	}
 
 	/**

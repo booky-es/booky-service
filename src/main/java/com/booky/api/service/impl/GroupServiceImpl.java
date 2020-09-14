@@ -13,7 +13,6 @@ import com.booky.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Message;
 import java.math.BigInteger;
 import java.util.List;
 

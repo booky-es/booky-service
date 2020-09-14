@@ -78,7 +78,7 @@ public class GroupController {
 	 * @return List<Group>
 	 * @throws BookyException
 	 */
-	@ApiOperation(value = "Retrieve all Groups of a User")
+	@ApiOperation(value = "Retrieve all Groups")
 	@GetMapping("/groups")
 	public List<Group> getAllGroups() throws BookyException {
 		LOGGER.info("getAllGroups : Begin ");

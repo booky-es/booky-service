@@ -61,7 +61,7 @@ public class CardQueueServiceImpl implements CardQueueService {
 
 	@Override
 	@Transactional
-	public void approveCardFromQueue(long id) throws CardQueueServiceException {
+	public CreateCard approveCardFromQueue(long id) throws CardQueueServiceException {
 		CardQueue cardQueue = cardQueueDAO.findCardQueueById(id);
 		CreateCard card = new CreateCard(cardQueue);
 		try {
@@ -73,6 +73,7 @@ public class CardQueueServiceImpl implements CardQueueService {
 		} catch (CardServiceException exception) {
 			throw new CardQueueServiceException(exception);
 		}
+		return card;
 	}
 
 }

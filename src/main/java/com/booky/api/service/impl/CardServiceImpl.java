@@ -7,11 +7,9 @@ import com.booky.api.dao.CardDAO;
 import com.booky.api.dao.CardQueueDAO;
 import com.booky.api.dao.GroupDAO;
 import com.booky.api.exception.CardServiceException;
-import com.booky.api.model.Card;
-import com.booky.api.model.CardQueue;
-import com.booky.api.model.CreateCard;
-import com.booky.api.model.Group;
+import com.booky.api.model.*;
 import com.booky.api.service.CardService;
+import com.booky.api.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +20,29 @@ import java.math.BigInteger;
 public class CardServiceImpl implements CardService {
 
 	@Autowired
-	CardDAO cardDAO;
+	private CardDAO cardDAO;
 
 	@Autowired
-	GroupDAO groupDAO;
+	private GroupDAO groupDAO;
 
 	@Autowired
-	CardQueueDAO cardQueueDAO;
+	private CardQueueDAO cardQueueDAO;
 
+	@Autowired
+	private UrlService urlService;
+
+	/**
+	 * Convert request object to Card object. Validate afterwards.
+	 * If admin, generate the short url and create the card.
+	 * If not admin, just create a card in the queue.
+	 * Set id and status for response card.
+	 * Set short url for the response card (this is required
+	 * considering the case where card is created by admin)
+	 *
+	 * @param card
+	 * @return
+	 * @throws CardServiceException
+	 */
 	@Override
 	public CreateCard createCard(CreateCard card) throws CardServiceException {
 		Card newCard = new Card();
@@ -43,8 +56,12 @@ public class CardServiceImpl implements CardService {
 
 			BigInteger userId = UserContext.getUserFromContext().getUserId();
 			if(group.getAdminIds().contains(userId)) {
+				URL url = new URL(newCard.getUrl(), -1);
+				url = urlService.createUrl(url);
+				newCard.setShortUrl(url.getShortUrl());
 				cardDAO.createCard(newCard);
 				card.setStatus(CardStatus.CREATED);
+
 			} else {
 				CardQueue cardQueue = new CardQueue(newCard, CardStatus.PENDING_FOR_CREATION);
 				cardQueueDAO.createCardQueue(cardQueue);
@@ -54,6 +71,7 @@ public class CardServiceImpl implements CardService {
 			throw new CardServiceException(exception);
 		}
 		card.setId(newCard.getId());
+		card.setShortUrl(newCard.getShortUrl());
 		return card;
 	}
 
@@ -68,6 +86,18 @@ public class CardServiceImpl implements CardService {
 		return card;
 	}
 
+
+	/**
+	 *
+	 * Convert request object to Card object. Validate afterwards
+	 * If admin, update the card.
+	 * If not admin, create an updated card in the queue.
+	 * Set id and status for the response card.
+	 *
+	 * @param card
+	 * @return
+	 * @throws CardServiceException
+	 */
 	@Override
 	public CreateCard updateCard(CreateCard card) throws CardServiceException {
 		Card newCard = new Card();
@@ -76,6 +106,8 @@ public class CardServiceImpl implements CardService {
 		newCard.setTitle(card.getTitle());
 		newCard.setUrl(card.getUrl());
 		newCard.setDescription(card.getDescription());
+		newCard.setShortUrl(card.getShortUrl());
+
 		try {
 			Card existingCard = cardDAO.findCardById(card.getId());
 			if(existingCard == null) throw new CardServiceException(Messages.CARD_UPDATE_EXCEPTION_NOT_SUCH_CARD);
@@ -99,6 +131,16 @@ public class CardServiceImpl implements CardService {
 		return card;
 	}
 
+	/**
+	 *
+	 * Validate the request.
+	 * If admin, delete the card
+	 * If not admin raise exception.
+	 *
+	 * @param id
+	 * @return
+	 * @throws CardServiceException
+	 */
 	@Override
 	public CardStatus deleteCard(long id) throws CardServiceException {
 		Card card = cardDAO.findCardById(id);
@@ -111,6 +153,7 @@ public class CardServiceImpl implements CardService {
 		if(group.getAdminIds().contains(userId)) {
 			cardDAO.deleteCard(id);
 			cardQueueDAO.deleteAllCardQueuesForCard(id);
+			urlService.deleteUrl(card.getShortUrl());
 			return CardStatus.DELETED;
 		} else {
 			throw new CardServiceException(Messages.CARD_DELETE_EXCEPTION_NOT_ADMIN);

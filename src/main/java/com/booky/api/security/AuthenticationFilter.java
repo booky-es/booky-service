@@ -27,7 +27,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	private final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
 
 	private Set<String> excludeUrls = new HashSet<>(Arrays.asList("/v2/api-docs", "/confiugraitons/**",
-			"/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/h2-console/**", "/login"));
+			"/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/h2-console/**",
+			"/api/v1/login",
+			"/r/*"));
 	private AntPathMatcher pathMatcher = new AntPathMatcher();
 
 	@Autowired

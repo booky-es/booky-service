@@ -68,10 +68,6 @@ public class JwtTokenProvider {
 	}
 	
 	public Authentication getAuthentication(HttpServletRequest request) throws Exception {
-
-		if(request.getRequestURI().equalsIgnoreCase("/api/v1/login")) {
-			return null;
-		}
 		
 		String jwtToken = request.getHeader("Authorization");
 				

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class Group {
     @JsonIgnore
     private long id;
 
+    @NotNull
     private String context;
 
     private List<BigInteger> adminIds = new ArrayList<>();
