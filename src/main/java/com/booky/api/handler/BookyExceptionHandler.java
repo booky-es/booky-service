@@ -2,6 +2,7 @@ package com.booky.api.handler;
 
 import com.booky.api.constants.Messages;
 import com.booky.api.exception.BookyException;
+import com.booky.api.exception.UrlRedirectException;
 import com.booky.api.model.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,11 @@ public class BookyExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<ErrorResponse> handlExceptions(BookyException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UrlRedirectException.class)
+    public final ResponseEntity<String> handlExceptions(UrlRedirectException ex) {
+        return new ResponseEntity<>("INVALID URL", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)

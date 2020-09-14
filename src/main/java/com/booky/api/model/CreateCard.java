@@ -20,6 +20,7 @@ public class CreateCard {
 
     private String image;
 
+    @NotNull
     private String description;
 
     private CardStatus status;
@@ -32,7 +33,7 @@ public class CreateCard {
     public CreateCard(CardQueue cardQueue) {
         this.id = cardQueue.getCardId();
         this.title = cardQueue.getTitle();
-        this.shortUrl = "SET URL";
+        this.shortUrl = cardQueue.getShortUrl();
         this.url = cardQueue.getUrl();
         this.image = cardQueue.getImage();
         this.description = cardQueue.getDescription();
