@@ -49,10 +49,9 @@ public class UrlServiceImpl implements UrlService {
         URL url = urlDAO.findUrlById(shortUrl);
         if(url == null) throw new UrlServiceException(Messages.URL_FIND_EXCEPTION_NO_SUCH_URL);
 
-        if(url.getDaysToExpire() == -1) return url.getUrl();
+        if(url.getExpiryDate().isBefore(url.getCreationTime())) return url.getUrl();
 
-        LocalDateTime expiryTime = url.getCreationTime().plusDays(url.getDaysToExpire().longValue());
-        if(expiryTime.isAfter(LocalDateTime.now())) return url.getUrl();
+        if(url.getExpiryDate().isAfter(LocalDateTime.now())) return url.getUrl();
 
         throw new UrlServiceException(Messages.URL_REDIRECTION_EXCEPTION_URL_EXPIRED);
     }

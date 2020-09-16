@@ -1,5 +1,6 @@
 package com.booky.api.service.impl;
 
+import com.booky.api.constants.ApiConstants;
 import com.booky.api.constants.CardStatus;
 import com.booky.api.constants.Messages;
 import com.booky.api.context.UserContext;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 
 @Service
@@ -56,7 +58,7 @@ public class CardServiceImpl implements CardService {
 
 			BigInteger userId = UserContext.getUserFromContext().getUserId();
 			if(group.getAdminIds().contains(userId)) {
-				URL url = new URL(newCard.getUrl(), -1);
+				URL url = new URL(newCard.getUrl(), LocalDateTime.now().minusDays(ApiConstants.DAYS_TO_MINUS_FOR_PERMANENT_URLS));
 				url = urlService.createUrl(url);
 				newCard.setShortUrl(url.getShortUrl());
 				cardDAO.createCard(newCard);
