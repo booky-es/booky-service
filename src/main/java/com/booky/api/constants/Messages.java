@@ -56,6 +56,7 @@ public class Messages {
     public static final String GROUP_REMOVE_ADMIN_EXCEPTION_NOT_ADMIN = "Removal of admin failed since user is not admin!";
 
     public static final String URL_CREATE_EXCEPTION = "Creation of url failed due to exception!";
+    public static final String URL_CREATE_EXCEPTION_INVALID_EXPPIRY = "Creation of url failed since given expiry is invalid!";
     public static final String URL_FIND_EXCEPTION_NO_SUCH_URL = "Retrieval of url failed since it could not be found!";
     public static final String URL_REDIRECTION_EXCEPTION_URL_EXPIRED = "Redirection of url failed since it is expired!";
     public static final String URL_REDIRECTION_EXCEPTION = "Redirection to url failed!";
