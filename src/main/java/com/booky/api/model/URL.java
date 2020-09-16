@@ -17,39 +17,32 @@ public class URL {
     private String shortUrl;
 
     @NotNull
-    private Integer daysToExpire;
+    private LocalDateTime expiryDate;
 
     private LocalDateTime creationTime;
 
-    private boolean expired;
-
     public URL() { }
 
-    public URL(String url, Integer daysToExpire) {
+    public URL(String url, LocalDateTime expiryDate) {
         this.url = url;
-        this.daysToExpire = daysToExpire;
+        this.expiryDate = expiryDate;
     }
 
     public String getUrl() {  return url;  }
 
     public void setUrl(String url) {  this.url = url; }
 
-    public Integer getDaysToExpire() {  return daysToExpire;  }
-
-    public void setDaysToExpire(Integer daysToExpire) {  this.daysToExpire = daysToExpire; }
-
     @JsonIgnore
     public LocalDateTime getCreationTime() {  return creationTime; }
 
     public void setCreationTime(LocalDateTime creationTime) {  this.creationTime = creationTime; }
-
-    public boolean isExpired() {  return expired; }
-
-    public void setExpired(boolean expired) {  this.expired = expired; }
 
     @JsonIgnore
     public String getShortUrl() {  return shortUrl; }
 
     public void setShortUrl(String shortUrl) {  this.shortUrl = shortUrl; }
 
+    public LocalDateTime getExpiryDate() {  return expiryDate; }
+
+    public void setExpiryDate(LocalDateTime expiryDate) {  this.expiryDate = expiryDate; }
 }

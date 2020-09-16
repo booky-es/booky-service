@@ -1,5 +1,6 @@
 package com.booky.api.controller;
 
+import com.booky.api.constants.ApiConstants;
 import com.booky.api.constants.Messages;
 import com.booky.api.exception.BookyException;
 import com.booky.api.exception.UrlRedirectException;
@@ -12,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -31,10 +35,17 @@ public class UrlController {
      */
     @ApiOperation(value = "Create Short URL with expiry")
     @PostMapping("/api/v1/url")
-    public URL createShortUrl(@RequestBody URL url) throws BookyException {
+    public URL createShortUrl(@RequestBody @Valid URL url) throws BookyException {
         LOGGER.info("createShortUrl : Begin ");
         try {
+            if(url.getExpiryDate() == null || url.getExpiryDate().isBefore(LocalDateTime.now()))
+                url.setExpiryDate(LocalDateTime.now().plusHours(ApiConstants.DEFAULT_EXPIRY_TIME_IN_HOURS_FOR_TEMPORARY_URLS));
+            if(url.getExpiryDate().isAfter(LocalDateTime.now().plusDays(ApiConstants.EXPIRY_MAX_DAYS_FOR_TEMPORARY_URLS))) {
+                throw new BookyException(Messages.URL_CREATE_EXCEPTION_INVALID_EXPPIRY);
+            }
             url = urlService.createUrl(url);
+        } catch(BookyException exception) {
+            throw exception;
         } catch (Exception exception) {
             LOGGER.error("Error while creating Short URL {}", exception);
             throw new BookyException(Messages.URL_CREATE_EXCEPTION);
