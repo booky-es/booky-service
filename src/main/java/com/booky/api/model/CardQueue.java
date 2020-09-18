@@ -1,7 +1,6 @@
 package com.booky.api.model;
 
 import com.booky.api.constants.CardStatus;
-import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +10,6 @@ public class CardQueue {
     public static final String SEQUENCE_NAME = "cards_queue_sequence";
 
     @Id
-    @JsonIgnore
     private long id;
 
     private String url;
