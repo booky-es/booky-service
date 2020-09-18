@@ -1,6 +1,6 @@
 # Booky Service
 
-This is a spring boot application with endpoints supporting [Booky Web](https://github.com/emmanuelxavier040/booky-web) application.
+This is a spring boot application with endpoints supporting [Booky Web](https://bookyweb.herokuapp.com/) application.
 
 ## Installation
 
