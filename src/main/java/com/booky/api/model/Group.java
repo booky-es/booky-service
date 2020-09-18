@@ -18,7 +18,6 @@ public class Group {
     public static final String SEQUENCE_NAME = "groups_sequence";
 
     @Id
-    @JsonIgnore
     private long id;
 
     @NotNull

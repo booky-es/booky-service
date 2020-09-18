@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.booky.api.constants.Messages;
 import com.booky.api.exception.BookyException;
-import com.booky.api.exception.UserServiceException;
 import com.booky.api.model.User;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.slf4j.Logger;
